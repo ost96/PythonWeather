@@ -6,14 +6,14 @@ import vtk
 from vtk.qt.QVTKRenderWindowInteractor import *
 
 
-class MainWindow(QWidget):
-
+class Ui_MainWindow(QWidget):
+    '''
     def __init__(self):
         super().__init__()
         self.hasLoadBeenVisited = False
         self.frame = QFrame()
         self.initUI()
-
+    '''
 
     def initUI(self):
         # CZĘŚ APLIKACJI Z WYKRESAMI
@@ -37,6 +37,54 @@ class MainWindow(QWidget):
         dropdown1.addItem("17.01.19")
         dropdown1.addItem("18.01.19")
         hbox1.addWidget(dropdown1)
+
+        self.pushButton = QPushButton()
+        self.pushButton.setText("")
+        icon = QIcon()
+        icon.addPixmap(QPixmap("images/arrow-circle-225.png"), QIcon.Normal, QIcon.Off)
+        self.pushButton.setIcon(icon)
+        self.pushButton.setObjectName("pushButton")
+        hbox1.addWidget(self.pushButton)
+
+        hbox3 = QHBoxLayout()
+
+        lbl = QLabel("Humidity: ")
+        hbox3.addWidget(lbl)
+
+        self.humidityLabel = QLabel()
+        self.humidityLabel.setText("")
+        self.humidityLabel.setObjectName("humidityLabel")
+        hbox3.addWidget(self.humidityLabel)
+
+        hbox4 = QHBoxLayout()
+
+        lbl = QLabel("Temperature: ")
+        hbox4.addWidget(lbl)
+
+        self.temperatureLabel = QLabel()
+        self.temperatureLabel.setText("")
+        self.temperatureLabel.setObjectName("temperatureLabel")
+        hbox4.addWidget(self.temperatureLabel)
+
+        hbox5 = QHBoxLayout()
+
+        lbl = QLabel("Pressure: ")
+        hbox5.addWidget(lbl)
+
+        self.pressureLabel = QLabel()
+        self.pressureLabel.setText("")
+        self.pressureLabel.setObjectName("pressureLabel")
+        hbox5.addWidget(self.pressureLabel)
+
+        hbox6 = QHBoxLayout()
+
+        lbl = QLabel("Wind: ")
+        hbox6.addWidget(lbl)
+
+        self.windLabel = QLabel()
+        self.windLabel.setText("")
+        self.windLabel.setObjectName("windLabel")
+        hbox6.addWidget(self.windLabel)
 
         hbox2 = QHBoxLayout()
 
@@ -79,6 +127,12 @@ class MainWindow(QWidget):
 
         vbox2 = QVBoxLayout()
         vbox2.addLayout(hbox1)
+
+        vbox2.addLayout(hbox3)
+        vbox2.addLayout(hbox4)
+        vbox2.addLayout(hbox5)
+        vbox2.addLayout(hbox6)
+
         vbox2.addLayout(hbox2)
 
         mainhbox.addLayout(vbox1)
@@ -86,8 +140,9 @@ class MainWindow(QWidget):
         self.setLayout(mainhbox)
         self.show()
 
-
+'''
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = MainWindow()
     sys.exit(app.exec_())
+'''
