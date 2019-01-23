@@ -11,6 +11,7 @@ import sys
 import requests
 from urllib.parse import urlencode
 import argparse
+import vtk
 
 OPENWEATHERMAP_API_KEY = 'e738a7fa3df63ebd9c57653a348c2972'
 """
@@ -118,6 +119,11 @@ class MainWindow(Ui_MainWindow):
         self.temperatureLabel.setText("%.1f °C" % weather['main']['temp'])
         self.pressureLabel.setText("%d" % weather['main']['pressure'])
         self.humidityLabel.setText("%d" % weather['main']['humidity'])
+        self.humidityVariable = weather['main']['humidity']
+
+        self.cubeSource.SetZLength(self.humidityVariable * 2) # DZIWNA SPRAWA: ZADZWON / NAPISZ TO WYTŁUMACZE SKĄD TO *2
+
+        self.render_window.Render()
 
 
 if __name__ == '__main__':

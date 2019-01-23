@@ -86,6 +86,23 @@ class Ui_MainWindow(QWidget):
         self.windLabel.setObjectName("windLabel")
         hbox6.addWidget(self.windLabel)
 
+        # VTK PART
+        self.humidityVariable = 10
+        self.cubeSource = vtk.vtkCubeSource()
+        self.cubeSource.SetCenter(430, 350, 0)
+        self.cubeSource.SetXLength(10)
+        self.cubeSource.SetYLength(10)
+        self.cubeSource.SetZLength(self.humidityVariable)
+
+        self.mapper = vtk.vtkPolyDataMapper()
+        self.mapper.SetInputConnection(self.cubeSource.GetOutputPort())
+
+        self.humidityActor = vtk.vtkActor()
+        self.humidityActor.SetMapper(self.mapper)
+        self.humidityActor.GetProperty().SetColor(0.0, 0.0, 1.0)
+
+        #map of Poland
+
         hbox2 = QHBoxLayout()
 
         vtk_widget = QVTKRenderWindowInteractor(self.frame)
@@ -98,27 +115,31 @@ class Ui_MainWindow(QWidget):
         image_actor = vtk.vtkImageActor()
         image_actor.SetInputData(image_data) #mb zła wersja
 
+        self.ren = vtk.vtkRenderer()
 
-        ren = vtk.vtkRenderer()
+        self.ren.AddActor(image_actor)
 
-        ren.AddActor(image_actor)
+        #weather data
+        self.ren.AddActor(self.humidityActor)
 
-        render_window = vtk_widget.GetRenderWindow()
+        self.render_window = vtk_widget.GetRenderWindow()
 
-        render_window.AddRenderer(ren)
+        self.render_window.AddRenderer(self.ren)
 
         render_window_interactor = vtk.vtkRenderWindowInteractor()
-        render_window_interactor.SetRenderWindow(render_window)
+        render_window_interactor.SetRenderWindow(self.render_window)
 
         # 2 linijki poniżej regulują interaktor, nie wiem czemu nie działa.
         int_style = vtk.vtkInteractorStyleTrackballCamera()
         render_window_interactor.SetInteractorStyle(int_style)
 
-        render_window.Render()
+        self.render_window.Render()
 
         vtk_widget.Initialize()
         vtk_widget.Start()
         hbox2.addWidget(vtk_widget)
+
+        # END OF VTK PART
 
         mainhbox = QHBoxLayout()
 
